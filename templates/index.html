@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car Price Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .prediction {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .error {
+            color: red;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Car Price Predictor</h1>
+    
+    <form action="{{ url_for('predict') }}" method="post">
+        <!-- Numeric Features -->
+        <div class="form-group">
+            <label>Year:</label>
+            <input type="number" name="year" required min="1900" max="2024" value="{{ features.year if features }}">
+        </div>
+        
+        <div class="form-group">
+            <label>Kilometers Driven:</label>
+            <input type="number" name="km_driven" required min="0" value="{{ features.km_driven if features }}">
+        </div>
+        
+        <div class="form-group">
+            <label>Mileage (kmpl):</label>
+            <input type="number" name="mileage" required min="0" step="0.1" value="{{ features.mileage if features }}">
+        </div>
+        
+        <div class="form-group">
+            <label>Engine (CC):</label>
+            <input type="number" name="engine" required min="0" value="{{ features.engine if features }}">
+        </div>
+        
+        <div class="form-group">
+            <label>Max Power (bhp):</label>
+            <input type="number" name="max_power" required min="0" step="0.1" value="{{ features.max_power if features }}">
+        </div>
+        
+        <!-- OneHot Encoded Features -->
+        <div class="form-group">
+            <label>Seller Type:</label>
+            <select name="seller_type" required>
+                <option value="">Select Seller Type</option>
+                <option value="Individual" {% if features and features.seller_type == 'Individual' %}selected{% endif %}>Individual</option>
+                <option value="Dealer" {% if features and features.seller_type == 'Dealer' %}selected{% endif %}>Dealer</option>
+                <option value="Trustmark Dealer" {% if features and features.seller_type == 'Trustmark Dealer' %}selected{% endif %}>Trustmark Dealer</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Fuel Type:</label>
+            <select name="fuel_type" required>
+                <option value="">Select Fuel Type</option>
+                <option value="Petrol" {% if features and features.fuel_type == 'Petrol' %}selected{% endif %}>Petrol</option>
+                <option value="Diesel" {% if features and features.fuel_type == 'Diesel' %}selected{% endif %}>Diesel</option>
+                <option value="CNG" {% if features and features.fuel_type == 'CNG' %}selected{% endif %}>CNG</option>
+                <option value="LPG" {% if features and features.fuel_type == 'LPG' %}selected{% endif %}>LPG</option>
+                <option value="Electric" {% if features and features.fuel_type == 'Electric' %}selected{% endif %}>Electric</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Transmission Type:</label>
+            <select name="transmission_type" required>
+                <option value="">Select Transmission</option>
+                <option value="Manual" {% if features and features.transmission_type == 'Manual' %}selected{% endif %}>Manual</option>
+                <option value="Automatic" {% if features and features.transmission_type == 'Automatic' %}selected{% endif %}>Automatic</option>
+            </select>
+        </div>
+        
+        <!-- Binary Encoded Feature -->
+        <div class="form-group">
+            <label>Car Name:</label>
+            <input type="text" name="car_name" required value="{{ features.car_name if features }}">
+        </div>
+
+        <div class="form-group">
+            <label>Vehicle Age:</label>
+            <input type="text" name="vehicle_age" required value="{{ features.vehicle_age if features }}">
+        </div>
+
+        
+        <div class="form-group">
+            <label>Number of Seats:</label>
+            <input type="text" name="seats" required value="{{ features.seats if features }}">
+        </div>
+        
+        <button type="submit">Predict Price</button>
+    </form>
+
+    {% if prediction_text %}
+    <div class="prediction">
+        <h3>{{ prediction_text }}</h3>
+    </div>
+    {% endif %}
+
+    {% if error_text %}
+    <div class="error">
+        <p>{{ error_text }}</p>
+    </div>
+    {% endif %}
+</body>
+</html>
