@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result - Car Price Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Car Price Prediction</h1>
+            <p>Your estimated car price is displayed below.</p>
+        </header>
+        <main>
+            <div class="result-box">
+                <h2>Estimated Price: ${{ price }}</h2>
+            </div>
+        </main>
+        <footer>
+            <a href="/predict" class="btn">Predict Another Price</a>
+            <a href="/" class="btn">Back to Home</a>
+        </footer>
+    </div>
+</body>
+</html>
