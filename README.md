@@ -2,7 +2,7 @@
 
 This repository addresses the challenge of predicting the price of used cars by leveraging supervised machine learning techniques from Scikit-learn. The project focuses on solving a regression problem using a dataset of used car sales from the Indian car market, sourced from the Cardekho website.
 
-Various regression algorithms, including XGBoost and Random Forests, were explored to evaluate their performance on the dataset. The models were benchmarked to identify the most effective approach for accurate price prediction.
+Various regression algorithms were explored to evaluate their performance on the dataset. The models were benchmarked to identify the most effective approach for accurate price prediction.
 
 The final solution integrates the best-performing model into a Flask application, enabling users to input car details and receive real-time price predictions.
 
