@@ -15,7 +15,7 @@ def format_currency(value):
 with open('./models/model.pkl', 'rb') as file:
     model = pickle.load(file)
     
-with open('preprocessor.pkl', 'rb') as file:
+with open('./models/preprocessor.pkl', 'rb') as file:
     preprocessor = pickle.load(file)
 
 @app.route('/')
